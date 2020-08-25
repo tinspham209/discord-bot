@@ -9,7 +9,7 @@ client.on("ready", () => {
 	console.log(`${client.user.tag} has logged in.`);
 });
 
-client.on("message", (message) => {
+client.on("message", async (message) => {
 	if (message.author.bot) {
 		return;
 	}
@@ -37,6 +37,21 @@ client.on("message", (message) => {
 					);
 			} else {
 				message.channel.send("That member was not found");
+			}
+		} else if (CMD_NAME === "ban") {
+			if (!message.member.hasPermission("BAN_MEMBERS")) {
+				return message.reply("You do not have permissions to use that command");
+			}
+			if (args.length === 0) {
+				return message.reply("Please prove an ID");
+			}
+			try {
+				const user = await message.guild.members.ban(args[0]);
+				message.channel.send(`User was banned successfully.`);
+			} catch (error) {
+				message.channel.send(
+					`An error occurred. Either I do not have permissions or the user was not found.`
+				);
 			}
 		}
 	}
