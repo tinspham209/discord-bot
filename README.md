@@ -22,15 +22,22 @@
 - Reaction to set Role : reaction :watermelon: icon to add `Verified` role
 - Announcements: `$announce [text]`
 - Music BOT:
-  - Play music: `$play [url]`
-  - Stop music: `$stop`
+  - Play: `$play [url]`
+  - Add to queue: `$play [url]`
+  - Stop: `$stop`
+  - Skip: `$skip`
+  - Pause: `$pause`
+  - Resume: `$resume`
+  - change Volume : `$volume [1-5]` - default: 5
+  - Now Playing: `$nowplaying`
+  - check song queue: `$queue`
 
 ### Plan Of Action
 
 - Project Setup
 - Creating Discord Application
 - Adding the Bot to our Discord Server
-- Logging the bot In
+- Logging the bot In Discord Server
 - Basic Events
 - Ready Event
 - Message Events
@@ -42,6 +49,15 @@
 - Announce command - Webhooks
 - Play command
 - Stop command
+- Create Queue system
+- Add song to queue
+- Skip command
+- Pause command
+- Resume command
+- change Volume command
+- NowPlaying command
+- check song queue command
+- Refactor kick command
 
 ### After this project
 
