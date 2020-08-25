@@ -27,19 +27,28 @@
 - Ban Command
 - Message Reactions & Reaction Roles
 - Webhooks
-- Thank You
 
 ### After this project
 
-I have improve my knowledge about
 I have understand about
+
+- Basic knowledge in setup a discord bot
+- Create function Kick, Ban, Reaction to set Role
+
 Next Steps:
+
+- Add Mute function
+- Deploy
 
 ### Directory Structure
 
 .
-├──
-└──
+├── package.json
+├── package-lock.json
+├── README.md
+├── .env
+└── src
+└── bot.js
 
 ### Set up
 
