@@ -225,6 +225,22 @@ __**Now Playing:**__  ${serverQueue.songs[0].title}
 			serverQueue.connection.dispatcher.pause();
 			message.channel.send("I have now paused the music for you.");
 			return undefined;
+		} else if (CMD_NAME === "resume") {
+			const voiceChannel = message.member.voice.channel;
+			if (!voiceChannel) {
+				return message.channel.send(
+					"You must be in a voice channel to use the pause commands!"
+				);
+			}
+			if (!serverQueue) {
+				return message.channel.send("There is nothing playing");
+			}
+			if (serverQueue.playing) {
+				return message.channel.send("The music is already playing.");
+			}
+			serverQueue.playing = true;
+			serverQueue.connection.dispatcher.resume();
+			message.channel.send("I have now resumed the music for you.");
 		}
 	}
 });
