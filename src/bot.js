@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const { Client, WebhookClient } = require("discord.js");
+const ytdl = require("ytdl-core");
 
 const client = new Client({
 	partials: ["MESSAGE", "REACTION"],
@@ -63,6 +64,58 @@ client.on("message", async (message) => {
 		} else if (CMD_NAME === "announce") {
 			const msg = args.join(" ");
 			webhookClient.send(msg);
+		} else if (CMD_NAME === "play") {
+			if (args.length === 0) {
+				return message.reply("Please prove an ID");
+			}
+			const voiceChannel = message.member.voice.channel;
+			if (!voiceChannel) {
+				return message.channel.send(
+					"You must be in a voice channel to play the bot!"
+				);
+			}
+			const permissions = voiceChannel.permissionsFor(message.client.user);
+			if (!permissions.has("CONNECT")) {
+				return message.channel.send(
+					"I don't have permissions to connect to the voice channel"
+				);
+			}
+			if (!permissions.has("SPEAK")) {
+				return message.channel.send(
+					"I don't have permissions to speak in the voice channel"
+				);
+			}
+			try {
+				const connection = await voiceChannel.join();
+			} catch (error) {
+				console.log(
+					`There was an error connecting to the voice channel: ${error}`
+				);
+				return message.channel.send(
+					`There was an error connecting to the voice channel: ${error}`
+				);
+				const dispatcher = connection
+					.play(ytdl(args[0], { filter: "audio" }))
+					.on("playing")
+					.on("finish", () => {
+						voiceChannel.leave();
+					})
+					.on("error", (error) => {
+						console.log(error);
+					});
+			}
+		} else if (CMD_NAME === "stop") {
+			const voiceChannel = message.member.voice.channel;
+			if (!voiceChannel) {
+				return message.channel.send(
+					"You must be in a voice channel to stop the bot!"
+				);
+			}
+			message.channel.send(
+				"The player has stopped and the queue has been cleared."
+			);
+			voiceChannel.leave();
+			return undefined;
 		}
 	}
 });
