@@ -2,7 +2,9 @@ require("dotenv").config();
 
 const { Client } = require("discord.js");
 
-const client = new Client();
+const client = new Client({
+	partials: ["MESSAGE", "REACTION"],
+});
 const PREFIX = "$";
 
 client.on("ready", () => {
@@ -53,6 +55,32 @@ client.on("message", async (message) => {
 					`An error occurred. Either I do not have permissions or the user was not found.`
 				);
 			}
+		}
+	}
+});
+
+client.on("messageReactionAdd", (reaction, user) => {
+	console.log("reaction add");
+	const { name } = reaction.emoji;
+	const member = reaction.message.guild.members.cache.get(user.id);
+	if (reaction.message.id === "747705383048708259") {
+		switch (name) {
+			case "🍉":
+				member.roles.add("747691484538732595");
+				break;
+		}
+	}
+});
+
+client.on("messageReactionRemove", (reaction, user) => {
+	console.log("reaction remove");
+	const { name } = reaction.emoji;
+	const member = reaction.message.guild.members.cache.get(user.id);
+	if (reaction.message.id === "747705383048708259") {
+		switch (name) {
+			case "🍉":
+				member.roles.remove("747691484538732595");
+				break;
 		}
 	}
 });
