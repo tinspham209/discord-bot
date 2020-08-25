@@ -141,6 +141,19 @@ client.on("message", async (message) => {
 			serverQueue.connection.dispatcher.end();
 			message.channel.send("I have stopped the music for you");
 			return undefined;
+		} else if (CMD_NAME === "skip") {
+			const voiceChannel = message.member.voice.channel;
+			if (!voiceChannel) {
+				return message.channel.send(
+					"You must be in a voice channel to skip the music!"
+				);
+			}
+			if (!serverQueue) {
+				return message.channel.send("There is nothing playing");
+			}
+			serverQueue.connection.dispatcher.end();
+			message.channel.send("I have skipped the music for you");
+			return undefined;
 		}
 	}
 });
