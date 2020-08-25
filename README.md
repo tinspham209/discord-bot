@@ -5,8 +5,10 @@
 ### Tech-Stack
 
 - NodeJS
-- Discord.js
+- Discord.js v12
 - dotenv
+- ytdl-core
+- opusscript
 
 ### Screenshot
 
@@ -18,6 +20,9 @@
 - Ban : `$ban [user_id]`
 - Reaction to set Role : reaction :watermelon: icon to add `Verified` role
 - Announcements: `$announce [text]`
+- Music BOT:
+  - Play music: `$play [url]`
+  - Stop music: `$stop`
 
 ### Plan Of Action
 
@@ -45,7 +50,6 @@ I have understand about
 Next Steps:
 
 - Add Mute function
-- Add Music Bot (Play, Skip, Stop Commands)
 
 ### Directory Structure
 
