@@ -10,6 +10,7 @@
 - ytdl-core : Convert youtube link to audio
 - opusscript
 - ffmpeg-static : Need FFMPEG For Any Music Bot To Work
+- moment : time format
 
 ### Screenshot
 
