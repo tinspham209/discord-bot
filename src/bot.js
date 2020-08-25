@@ -68,7 +68,7 @@ client.on("message", async (message) => {
 					.setColor("#ebb734")
 					.setDescription(
 						`
-**Member:** ${mentionedMember.user.tag}
+**Member:** ${mentionedMember.user.tag} - (${mentionedMember.user.id})
 **Action:** Kick
 **Reason:** ${reason || "Undefined"}
 **Channel:** ${message.channel}
@@ -84,20 +84,57 @@ client.on("message", async (message) => {
 			}
 			return undefined;
 		} else if (CMD_NAME === "ban") {
+			const reason = args[1];
+			const user = args[0];
 			if (!message.member.hasPermission("BAN_MEMBERS")) {
-				return message.reply("You do not have permissions to use that command");
+				return message.reply("You don't have permissions to use that command");
 			}
-			if (args.length === 0) {
-				return message.reply("Please prove an ID");
+			if (!message.guild.me.hasPermission("BAN_MEMBERS")) {
+				return message.reply("I don't have permissions to ban members");
 			}
-			try {
-				const user = await message.guild.members.ban(args[0]);
-				message.channel.send(`User was banned successfully.`);
-			} catch (error) {
-				message.channel.send(
-					`An error occurred. Either I do not have permissions or the user was not found.`
+			if (!user) {
+				return message.channel.send("You need to specify someone to ban");
+			}
+			if (!mentionedMember) {
+				return message.channel.send("I can't find that member");
+			}
+			if (
+				mentionedMember.roles.highest.position >=
+					message.member.roles.highest.position ||
+				message.author.id !== message.guild.owner.id
+			) {
+				return message.channel.send(
+					"You can't ban that member due to your role being lower than theirs or there the guild owner"
 				);
 			}
+			if (mentionedMember.id === message.author.id) {
+				return message.channel.send("Why would you want to ban yourself?");
+			}
+			if (mentionedMember.bannable) {
+				const embed = new MessageEmbed()
+					.setAuthor(
+						`${message.author.tag} - (${message.author.id})`,
+						message.author.displayAvatarURL()
+					)
+					.setThumbnail(mentionedMember.user.displayAvatarURL())
+					.setColor("#ebb734")
+					.setDescription(
+						`
+**Member:** ${mentionedMember.user.tag} - (${mentionedMember.user.id})
+**Action:** Ban
+**Reason:** ${reason || "Undefined"}
+**Channel:** ${message.channel}
+**Time:** ${moment().format("llll")}
+					`
+					);
+				message.channel.send(embed);
+				mentionedMember.ban();
+			} else {
+				return message.channel.send(
+					"I can't ban this user make sure my role is above theirs"
+				);
+			}
+			return undefined;
 		} else if (CMD_NAME === "announce") {
 			const msg = args.join(" ");
 			webhookClient.send(msg);
