@@ -12,6 +12,7 @@ const webhookClient = new WebhookClient(
 	process.env.WEBHOOK_TOKEN
 );
 const PREFIX = "$";
+const queue = new Map();
 
 client.on("ready", () => {
 	console.log(`${client.user.tag} has logged in.`);
@@ -21,6 +22,7 @@ client.on("message", async (message) => {
 	if (message.author.bot) {
 		return;
 	}
+	const serverQueue = queue.get(message.guild.id);
 	if (message.content.startsWith(PREFIX)) {
 		const [CMD_NAME, ...args] = message.content
 			.trim()
@@ -85,25 +87,46 @@ client.on("message", async (message) => {
 					"I don't have permissions to speak in the voice channel"
 				);
 			}
-			try {
-				const connection = await voiceChannel.join();
-			} catch (error) {
-				console.log(
-					`There was an error connecting to the voice channel: ${error}`
-				);
+
+			const songInfo = await ytdl.getInfo(args[0]);
+			const song = {
+				title: songInfo.videoDetails.title,
+				url: songInfo.videoDetails.video_url,
+			};
+			if (!serverQueue) {
+				const queueConstruct = {
+					textChannel: message.channel,
+					voiceChannel: voiceChannel,
+					connection: null,
+					songs: [],
+					volume: 5,
+					playing: true,
+				};
+				queue.set(message.guild.id, queueConstruct);
+				queueConstruct.songs.push(song);
+				try {
+					const connection = await voiceChannel.join();
+					queueConstruct.connection = connection;
+					play(message.guild, queueConstruct.songs[0]);
+					message.channel.send(
+						`**${song.title}** has been added to the queue.`
+					);
+				} catch (error) {
+					console.log(
+						`There was an error connecting to the voice channel: ${error}`
+					);
+					queue.delete(message.guild.id);
+					return message.channel.send(
+						`There was an error connecting to the voice channel: ${error}`
+					);
+				}
+			} else {
+				serverQueue.songs.push(song);
 				return message.channel.send(
-					`There was an error connecting to the voice channel: ${error}`
+					`**${song.title}** has been added to the queue.`
 				);
-				const dispatcher = connection
-					.play(ytdl(args[0], { filter: "audio" }))
-					.on("playing")
-					.on("finish", () => {
-						voiceChannel.leave();
-					})
-					.on("error", (error) => {
-						console.log(error);
-					});
 			}
+			return undefined;
 		} else if (CMD_NAME === "stop") {
 			const voiceChannel = message.member.voice.channel;
 			if (!voiceChannel) {
@@ -111,14 +134,36 @@ client.on("message", async (message) => {
 					"You must be in a voice channel to stop the bot!"
 				);
 			}
-			message.channel.send(
-				"The player has stopped and the queue has been cleared."
-			);
-			voiceChannel.leave();
+			if (!serverQueue) {
+				return message.channel.send("There is nothing playing");
+			}
+			serverQueue.songs = [];
+			serverQueue.connection.dispatcher.end();
+			message.channel.send("I have stopped the music for you");
 			return undefined;
 		}
 	}
 });
+
+const play = (guild, song) => {
+	const serverQueue = queue.get(guild.id);
+
+	if (!song) {
+		serverQueue.voiceChannel.leave();
+		queue.delete(guild.id);
+		return;
+	}
+	const dispatcher = serverQueue.connection
+		.play(ytdl(song.url, { filter: "audio" }))
+		.on("finish", () => {
+			serverQueue.songs.shift();
+			play(guild, serverQueue.songs[0]);
+		})
+		.on("error", (error) => {
+			console.log("Error" + error);
+		});
+	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+};
 
 client.on("messageReactionAdd", (reaction, user) => {
 	console.log("reaction add");
