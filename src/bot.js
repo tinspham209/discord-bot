@@ -151,6 +151,32 @@ client.on("message", async (message) => {
 			serverQueue.connection.dispatcher.end();
 			message.channel.send("I have skipped the music for you");
 			return undefined;
+		} else if (CMD_NAME === "volume") {
+			const voiceChannel = message.member.voice.channel;
+			const volume = args[0];
+			if (!voiceChannel) {
+				return message.channel.send(
+					"You must be in a voice channel to use music commands!"
+				);
+			}
+			if (!serverQueue) {
+				return message.channel.send("There is nothing playing");
+			}
+			if (!volume) {
+				return message.channel.send(
+					`That volume is: **${serverQueue.volume}**`
+				);
+			}
+			if (isNaN(volume)) {
+				return message.channel.send(
+					`That is not a valid amount to change the volume to`
+				);
+			}
+
+			serverQueue.volume = volume;
+			serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 5);
+			message.channel.send(`I have changed the volume to **${volume}**`);
+			return undefined;
 		}
 	}
 });
