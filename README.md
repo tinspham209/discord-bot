@@ -45,4 +45,14 @@ Next Steps:
 
 - `git clone`
 - `npm install`
-- `npm start`
+- Update token in `.env`
+
+  - Adding the Bot to discord server
+    - https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot
+  - DISCORDJS_BOT_TOKEN: discord.com/developers/applications ~> BOT > TOKEN
+  - Setting Webhooks
+    - Setting text channel > Integrations > New Webhook > Copy Webhook URL
+    - Get WEBHOOK_ID & WEBHOOK_TOKEN in URL
+    - https://discordapp.com/api/webhooks/WEBHOOK_ID/WEBHOOK_TOKEN
+
+- `npm run start`
