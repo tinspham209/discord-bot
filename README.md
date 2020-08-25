@@ -10,7 +10,18 @@
 
 ### Deploy
 
+https://discord-bot-dfkgjhjdkfg.herokuapp.com/
+
 ### Screenshot
+
+<img src="https://i.imgur.com/snzfdBE.png" />
+
+### Functions
+
+- Kick
+- Ban
+- Reaction to set Role
+- Announcements
 
 ### Plan Of Action
 
@@ -38,26 +49,29 @@ I have understand about
 Next Steps:
 
 - Add Mute function
-- Deploy
 
 ### Directory Structure
 
+```
 .
 ├── package.json
 ├── package-lock.json
 ├── README.md
 ├── .env
 └── src
-└── bot.js
+    └── bot.js
+```
 
 ### Set up
 
 - `git clone`
 - `npm install`
+
+- Adding the Bot to discord server
+  - discord.com/developers/applications > General Information > CLIENT_ID
+  - https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&scope=bot
 - Update token in `.env`
 
-  - Adding the Bot to discord server
-    - https://discord.com/api/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot
   - DISCORDJS_BOT_TOKEN: discord.com/developers/applications ~> BOT > TOKEN
   - Setting Webhooks
     - Setting text channel > Integrations > New Webhook > Copy Webhook URL
