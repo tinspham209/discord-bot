@@ -177,6 +177,18 @@ client.on("message", async (message) => {
 			serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 5);
 			message.channel.send(`I have changed the volume to **${volume}**`);
 			return undefined;
+		} else if (CMD_NAME === "nowplaying") {
+			const voiceChannel = message.member.voice.channel;
+			if (!voiceChannel) {
+				return message.channel.send(
+					"You must be in a voice channel to use music commands!"
+				);
+			}
+			if (!serverQueue) {
+				return message.channel.send("There is nothing playing");
+			}
+			message.channel.send(`Now Playing: **${serverQueue.songs[0].title}**`);
+			return undefined;
 		}
 	}
 });
