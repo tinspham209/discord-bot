@@ -14,10 +14,10 @@
 
 ### Functions
 
-- Kick
-- Ban
-- Reaction to set Role
-- Announcements
+- Kick : `$kick [user_id]`
+- Ban : `$ban [user_id]`
+- Reaction to set Role : reaction :watermelon: icon to add `Verified` role
+- Announcements: `$announce [text]`
 
 ### Plan Of Action
 
