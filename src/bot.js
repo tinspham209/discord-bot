@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const { Client, WebhookClient } = require("discord.js");
+const { Client, WebhookClient, Util } = require("discord.js");
 const ytdl = require("ytdl-core");
 
 const client = new Client({
@@ -90,7 +90,7 @@ client.on("message", async (message) => {
 
 			const songInfo = await ytdl.getInfo(args[0]);
 			const song = {
-				title: songInfo.videoDetails.title,
+				title: Util.escapeMarkdown(songInfo.videoDetails.title),
 				url: songInfo.videoDetails.video_url,
 			};
 			if (!serverQueue) {
@@ -108,9 +108,6 @@ client.on("message", async (message) => {
 					const connection = await voiceChannel.join();
 					queueConstruct.connection = connection;
 					play(message.guild, queueConstruct.songs[0]);
-					message.channel.send(
-						`**${song.title}** has been added to the queue.`
-					);
 				} catch (error) {
 					console.log(
 						`There was an error connecting to the voice channel: ${error}`
@@ -176,6 +173,8 @@ const play = (guild, song) => {
 			console.log("Error" + error);
 		});
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+	serverQueue.textChannel.send(`Start Playing: **${song.title}**`);
 };
 
 client.on("messageReactionAdd", (reaction, user) => {
