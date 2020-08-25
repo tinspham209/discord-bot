@@ -303,26 +303,24 @@ const play = (guild, song) => {
 };
 
 client.on("messageReactionAdd", (reaction, user) => {
-	console.log("reaction add");
 	const { name } = reaction.emoji;
 	const member = reaction.message.guild.members.cache.get(user.id);
-	if (reaction.message.id === "747705383048708259") {
+	if (reaction.message.id === process.env.REACTION_MESSAGE_ID) {
 		switch (name) {
-			case "🍉":
-				member.roles.add("747691484538732595");
+			case process.env.ROLE_NAME:
+				member.roles.add(process.env.ROLE_ID);
 				break;
 		}
 	}
 });
 
 client.on("messageReactionRemove", (reaction, user) => {
-	console.log("reaction remove");
 	const { name } = reaction.emoji;
 	const member = reaction.message.guild.members.cache.get(user.id);
-	if (reaction.message.id === "747705383048708259") {
+	if (reaction.message.id === process.env.REACTION_MESSAGE_ID) {
 		switch (name) {
-			case "🍉":
-				member.roles.remove("747691484538732595");
+			case process.env.ROLE_NAME:
+				member.roles.remove(process.env.ROLE_ID);
 				break;
 		}
 	}
