@@ -7,8 +7,9 @@
 - NodeJS
 - Discord.js v12
 - dotenv
-- ytdl-core
+- ytdl-core : Convert youtube link to audio
 - opusscript
+- ffmpeg-static : Need FFMPEG For Any Music Bot To Work
 
 ### Screenshot
 
@@ -38,7 +39,9 @@
 - Kick Command
 - Ban Command
 - Message Reactions & Reaction Roles
-- Webhooks
+- Announce command - Webhooks
+- Play command
+- Stop command
 
 ### After this project
 
@@ -50,6 +53,7 @@ I have understand about
 Next Steps:
 
 - Add Mute function
+- Music is playing but very lag and response too longgggg 😂
 
 ### Directory Structure
 
