@@ -189,6 +189,26 @@ client.on("message", async (message) => {
 			}
 			message.channel.send(`Now Playing: **${serverQueue.songs[0].title}**`);
 			return undefined;
+		} else if (CMD_NAME === "queue") {
+			const voiceChannel = message.member.voice.channel;
+			if (!voiceChannel) {
+				return message.channel.send(
+					"You must be in a voice channel to use music commands!"
+				);
+			}
+			if (!serverQueue) {
+				return message.channel.send("There is nothing playing");
+			}
+			message.channel.send(
+				`
+			__**Song Queue:**__
+			${serverQueue.songs.map((song) => `**-** ${song.title}`).join("\n")}
+			
+			__**Now Playing:**__ ${serverQueue.songs[0].title}
+			`,
+				{ split: true }
+			);
+			return undefined;
 		}
 	}
 });
