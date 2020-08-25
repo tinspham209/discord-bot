@@ -18,7 +18,7 @@
 
 ### Functions
 
-- Kick : `$kick [user_id]`
+- Kick : `$kick @[user_name] [reason]`
 - Ban : `$ban [user_id]`
 - Reaction to set Role : reaction :watermelon: icon to add `Verified` role
 - Announcements: `$announce [text]`
@@ -58,19 +58,15 @@
 - change Volume command
 - NowPlaying command
 - check song queue command
-- Refactor kick command
+- Refactor
+  - kick command
 
 ### After this project
 
-I have understand about
-
-- Basic knowledge in setup a discord bot
-- Create function Kick, Ban, Reaction to set Role
-
 Next Steps:
 
-- Add Mute function
-- Music is playing but very lag and response too longgggg 😂
+- Music is playing but response too longgggg 😂
+- Add youtube search function
 
 ### Directory Structure
 
@@ -90,16 +86,25 @@ Next Steps:
 - `npm install`
 
 - Adding the Bot to discord server
-  - https://discord.com/developers/applications > General Information > CLIENT_ID
+  - https://discord.com/developers/applications > General Information > `CLIENT_ID`
   - And type URL in your browser:
     - https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&scope=bot
 - Update token in `.env`
 
-  - DISCORDJS_BOT_TOKEN:
+  - `DISCORDJS_BOT_TOKEN`:
     - https://discord.com/developers/applications ~> BOT > TOKEN
   - Setting Webhooks
     - Setting text channel > Integrations > New Webhook > Copy Webhook URL
-    - Get WEBHOOK_ID & WEBHOOK_TOKEN in URL
+    - Get `WEBHOOK_ID` & `WEBHOOK_TOKEN` in URL
     - https://discordapp.com/api/webhooks/WEBHOOK_ID/WEBHOOK_TOKEN
+  - `REACTION_MESSAGE_ID` : ID of comment that you want to set function reaction to set role
+  - `ROLE_NAME` = icon that you want - example: `:watermelon:`
+  - `ROLE_ID` = ID of roles that you want to set in server setting > roles
+
+- If you want to add more reaction roles. You need to update code at `src/bot.js` in function `messageReactionAdd` &`messageReactionRemove`
+
+  - Add new name in `.env`. example: `ROLE_NAME_2` & `ROLE_ID_2`
+  - Add more case at `switch case` in 2 functions
 
 - `npm run start`
+- Or `npm run dev` in development: nodemon
