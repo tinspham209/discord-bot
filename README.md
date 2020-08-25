@@ -22,9 +22,9 @@
 - Ban : `$ban [user_id]`
 - Reaction to set Role : reaction :watermelon: icon to add `Verified` role
 - Announcements: `$announce [text]`
-- Music BOT:
-  - Play: `$play [url]`
-  - Add to queue: `$play [url]`
+- Music BOT with Youtube Link:
+  - Play: `$play [youtube_url]`
+  - Add music to queue: `$play [youtube_url]`
   - Stop: `$stop`
   - Skip: `$skip`
   - Pause: `$pause`
@@ -59,7 +59,8 @@
 - NowPlaying command
 - check song queue command
 - Refactor
-  - kick command
+  - Kick with new command
+  - Ban with new command
 
 ### After this project
 
