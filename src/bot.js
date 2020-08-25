@@ -1,7 +1,8 @@
 require("dotenv").config();
 
-const { Client, WebhookClient, Util } = require("discord.js");
+const { Client, WebhookClient, Util, MessageEmbed } = require("discord.js");
 const ytdl = require("ytdl-core");
+const moment = require("moment");
 
 const client = new Client({
 	partials: ["MESSAGE", "REACTION"],
@@ -23,31 +24,65 @@ client.on("message", async (message) => {
 		return;
 	}
 	const serverQueue = queue.get(message.guild.id);
+	const mentionedMember = message.mentions.members.first();
 	if (message.content.startsWith(PREFIX)) {
 		const [CMD_NAME, ...args] = message.content
 			.trim()
 			.substring(PREFIX.length)
 			.split(/\s+/);
 		if (CMD_NAME === "kick") {
+			const reason = args[1];
+			const user = args[0];
+
 			if (!message.member.hasPermission("KICK_MEMBERS")) {
-				return message.reply("You do not have permissions to use that command");
+				return message.reply("You don't have permissions to use that command");
 			}
-			if (args.length === 0) {
-				return message.reply("Please prove an ID");
+			if (!message.guild.me.hasPermission("KICK_MEMBERS")) {
+				return message.reply("I don't have permissions to kick members");
 			}
-			const member = message.guild.members.cache.get(args[0]);
-			if (member) {
-				member
-					.kick()
-					.then((member) => message.channel.send(`${member} was kicked.`))
-					.catch((error) =>
-						message.channel.send(
-							"I do not have permissions to kick that user :("
-						)
+			if (!user) {
+				return message.channel.send("You need to specify someone to kick");
+			}
+			if (!mentionedMember) {
+				return message.channel.send("I can't find that member");
+			}
+			if (
+				mentionedMember.roles.highest.position >=
+					message.member.roles.highest.position ||
+				message.author.id !== message.guild.owner.id
+			) {
+				return message.channel.send(
+					"You can't kick this member due to your role being lower than theirs or there the guild owner"
+				);
+			}
+			if (mentionedMember.id === message.author.id) {
+				return message.channel.send("Why would you want to kick yourself?");
+			}
+			if (mentionedMember.kickable) {
+				const embed = new MessageEmbed()
+					.setAuthor(
+						`${message.author.tag} - (${message.author.id})`,
+						message.author.displayAvatarURL()
+					)
+					.setThumbnail(mentionedMember.user.displayAvatarURL())
+					.setColor("#ebb734")
+					.setDescription(
+						`
+**Member:** ${mentionedMember.user.tag}
+**Action:** Kick
+**Reason:** ${reason || "Undefined"}
+**Channel:** ${message.channel}
+**Time:** ${moment().format("llll")}
+					`
 					);
+				message.channel.send(embed);
+				mentionedMember.kick();
 			} else {
-				message.channel.send("That member was not found");
+				return message.channel.send(
+					"I can't kick this user make sure I have permissions"
+				);
 			}
+			return undefined;
 		} else if (CMD_NAME === "ban") {
 			if (!message.member.hasPermission("BAN_MEMBERS")) {
 				return message.reply("You do not have permissions to use that command");
