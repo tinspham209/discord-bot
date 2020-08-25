@@ -201,13 +201,29 @@ client.on("message", async (message) => {
 			}
 			message.channel.send(
 				`
-			__**Song Queue:**__
-			${serverQueue.songs.map((song) => `**-** ${song.title}`).join("\n")}
-			
-			__**Now Playing:**__ ${serverQueue.songs[0].title}
+__**Song Queue:**__
+${serverQueue.songs.map((song) => `**-** ${song.title}`).join("\n")}
+__**Now Playing:**__  ${serverQueue.songs[0].title}
 			`,
 				{ split: true }
 			);
+			return undefined;
+		} else if (CMD_NAME === "pause") {
+			const voiceChannel = message.member.voice.channel;
+			if (!voiceChannel) {
+				return message.channel.send(
+					"You must be in a voice channel to use the pause commands!"
+				);
+			}
+			if (!serverQueue) {
+				return message.channel.send("There is nothing playing");
+			}
+			if (!serverQueue.playing) {
+				return message.channel.send("The music is already paused.");
+			}
+			serverQueue.playing = false;
+			serverQueue.connection.dispatcher.pause();
+			message.channel.send("I have now paused the music for you.");
 			return undefined;
 		}
 	}
