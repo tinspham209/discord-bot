@@ -8,10 +8,6 @@
 - Discord.js
 - dotenv
 
-### Deploy
-
-https://discord-bot-dfkgjhjdkfg.herokuapp.com/
-
 ### Screenshot
 
 <img src="https://i.imgur.com/snzfdBE.png" />
@@ -49,6 +45,7 @@ I have understand about
 Next Steps:
 
 - Add Mute function
+- Add Music Bot (Play, Skip, Stop Commands)
 
 ### Directory Structure
 
@@ -68,11 +65,13 @@ Next Steps:
 - `npm install`
 
 - Adding the Bot to discord server
-  - discord.com/developers/applications > General Information > CLIENT_ID
-  - https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&scope=bot
+  - https://discord.com/developers/applications > General Information > CLIENT_ID
+  - And type URL in your browser:
+    - https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&scope=bot
 - Update token in `.env`
 
-  - DISCORDJS_BOT_TOKEN: discord.com/developers/applications ~> BOT > TOKEN
+  - DISCORDJS_BOT_TOKEN:
+    - https://discord.com/developers/applications ~> BOT > TOKEN
   - Setting Webhooks
     - Setting text channel > Integrations > New Webhook > Copy Webhook URL
     - Get WEBHOOK_ID & WEBHOOK_TOKEN in URL
