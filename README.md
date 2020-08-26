@@ -1,4 +1,4 @@
-# Mini Project: Discord Bot
+# Mini Project: Discord Moderation & Music BOT
 
 ## Date: 25 - Aug - 2020
 
@@ -94,6 +94,7 @@ Next Steps:
 - Add/Remove Role
 - Create/Delete Role
 - Create/Delete Channel
+- Refactor code by split specify function in specify folder
 
 ### Directory Structure
 
