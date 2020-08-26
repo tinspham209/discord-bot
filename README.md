@@ -18,8 +18,9 @@
 
 ### Functions
 
-- Kick : `$kick @[user_name] [reason]`
-- Ban : `$ban [user_id]`
+- Kick : `$kick @[user_name] [reason-reason]`
+- Ban : `$ban @[user_name] [reason-reason]`
+- Soft ban : `$softban @[user_name] [reason-reason] [times]`
 - Reaction to set Role : reaction :watermelon: icon to add `Verified` role
 - Announcements: `$announce [text]`
 - Music BOT with Youtube Link:
@@ -61,6 +62,7 @@
 - Refactor
   - Kick with new command
   - Ban with new command
+- Soft Ban command
 
 ### After this project
 
