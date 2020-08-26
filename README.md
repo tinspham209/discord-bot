@@ -11,6 +11,7 @@
 - opusscript
 - ffmpeg-static : Need FFMPEG For Any Music Bot To Work
 - moment : time format
+- ms : convert string seconds to number: Input: 100s > `numbers`
 
 ### Screenshot
 
@@ -19,18 +20,27 @@
 ### Functions
 
 - Kick : `$kick @[user_name] [reason-reason]`
+  - `$kick @Rafen spamming`
 - Ban : `$ban @[user_name] [reason-reason]`
-- Soft ban : `$softban @[user_name] [reason-reason] [times]`
+  - `$ban @Rafen spamming`
+- Soft ban : `$softban @[user_name] [reason-reason] [days]`
+  - `$softban @Rafen spamming 1`
+- Mute : `$mute @[user_name] [reason-reason] [seconds]s`
+  - `$mute @Rafen spamming 100s`
 - Reaction to set Role : reaction :watermelon: icon to add `Verified` role
 - Announcements: `$announce [text]`
+  - `$announce Hello everybody`
 - Music BOT with Youtube Link:
   - Play: `$play [youtube_url]`
+    - `$play https://www.youtube.com/watch?v=gwpud7f_nDk`
   - Add music to queue: `$play [youtube_url]`
+    - `$play https://www.youtube.com/watch?v=gwpud7f_nDk`
   - Stop: `$stop`
   - Skip: `$skip`
   - Pause: `$pause`
   - Resume: `$resume`
   - change Volume : `$volume [1-5]` - default: 5
+    - `\$volume 3`
   - Now Playing: `$nowplaying`
   - check song queue: `$queue`
 
@@ -63,6 +73,7 @@
   - Kick with new command
   - Ban with new command
 - Soft Ban command
+- Mute command
 
 ### After this project
 
@@ -108,6 +119,7 @@ Next Steps:
 
   - Add new name in `.env`. example: `ROLE_NAME_2` & `ROLE_ID_2`
   - Add more case at `switch case` in 2 functions
+  - `ROLE_MUTE_ID` : Role ID that is already mute in server setting > roles
 
 - `npm run start`
 - Or `npm run dev` in development: nodemon
