@@ -135,6 +135,71 @@ client.on("message", async (message) => {
 				);
 			}
 			return undefined;
+		} else if (CMD_NAME === "softban") {
+			console.log("softban");
+			const days = args[2];
+			const reason = args[1];
+			const user = args[0];
+			console.log("days", days);
+			console.log("reason", reason);
+			console.log("user", user);
+			if (!message.member.hasPermission("BAN_MEMBERS")) {
+				return message.reply("You don't have permissions to use that command");
+			}
+			if (!message.guild.me.hasPermission("BAN_MEMBERS")) {
+				return message.reply("I don't have permissions to ban members");
+			}
+			if (!user) {
+				return message.channel.send("You need to specify someone to ban");
+			}
+			if (!mentionedMember) {
+				return message.channel.send("I can't find that member");
+			}
+			if (
+				mentionedMember.roles.highest.position >=
+					message.member.roles.highest.position ||
+				message.author.id !== message.guild.owner.id
+			) {
+				return message.channel.send(
+					"You can't softBan some one who is equal or has a higher role to you or they are the owner"
+				);
+			}
+			if (mentionedMember.id === message.author.id) {
+				return message.channel.send("Why would you want to softBan yourself?");
+			}
+			if (isNaN(days)) {
+				return message.channel.send(
+					"Days ban is invalid, sure sure it is a number?"
+				);
+			}
+			if (mentionedMember.bannable) {
+				const embed = new MessageEmbed()
+					.setAuthor(
+						`${message.author.tag} - (${message.author.id})`,
+						message.author.displayAvatarURL()
+					)
+					.setThumbnail(mentionedMember.user.displayAvatarURL())
+					.setColor("#ebb734")
+					.setDescription(
+						`
+**Member:** ${mentionedMember.user.tag} - (${mentionedMember.user.id})
+**Action:** Soft Ban
+**Ban Times:** ${days} days
+**Reason:** ${reason || "Undefined"}
+**Channel:** ${message.channel}
+**Time:** ${moment().format("llll")}
+					`
+					);
+				message.channel.send(embed);
+				mentionedMember
+					.ban({ days: days })
+					.then(() => message.guild.members.unban(mentionedMember.id));
+			} else {
+				return message.channel.send(
+					"I don't have permissions to softBan this member make sure my role is higher than theirs"
+				);
+			}
+			return undefined;
 		} else if (CMD_NAME === "announce") {
 			const msg = args.join(" ");
 			webhookClient.send(msg);
