@@ -88,24 +88,24 @@ client.on("message", async (message) => {
 		} else if (CMD_NAME === "help") {
 			const embed = new MessageEmbed().setColor("#ebb734").setDescription(`
 __**MODERATION BOT:**__
-	- **Kick:**"$kick @[user_name] [reason]"
-	- **Ban: **"$ban @[user_name] [reason]"
-	- **Soft ban: **"$softban @[user_name] [reason]"
-	- **Temp ban: **"tempban @[user_name] [reason] [seconds]"
-	- **Mute: ** "$mute @[user_name] [reason] [seconds]"
-	- **UnMute: **"$unmute @[user_name] [reason]"
-	- **Announcements: **"$announce [text]"
+	- **Kick: **$kick @[user_name] [reason]
+	- **Ban: **$ban @[user_name] [reason]
+	- **Soft ban: **$softban @[user_name] [reason]
+	- **Temp ban: **$tempban @[user_name] [reason] [seconds]
+	- **Mute: ** $mute @[user_name] [reason] [seconds]
+	- **UnMute: **$unmute @[user_name] [reason]
+	- **Announcements: **$announce [text]
 
 __**MUSIC BOT:**__
-	- **Play: **"$play [youtube_url]"
-	- **Add music to queue: **"$play [youtube_url]"
-	- **Stop: **"$stop"
-	- **Skip: **"$skip"
-	- **Pause: **"$pause"
-	- **Resume: **"$resume"
-	- **change Volume: **"$volume [1-5]" - default: 5
-	- **Now Playing: **"$nowplaying"
-	- **check song queue: **"$queue"
+	- **Play: **$play [youtube_url]
+	- **Add music to queue: **$play [youtube_url]
+	- **Stop: **$stop
+	- **Skip: **$skip
+	- **Pause: **$pause
+	- **Resume: **$resume
+	- **change Volume: **$volume [1-5] - default: 5
+	- **Now Playing: **$nowplaying
+	- **check song queue: **$queue
 			`);
 			return message.channel.send(embed);
 		} else if (CMD_NAME === "ban") {
