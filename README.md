@@ -19,18 +19,26 @@
 
 ### Functions
 
-- Kick : `$kick @[user_name] [reason-reason]`
-  - `$kick @Rafen spamming`
-- Ban : `$ban @[user_name] [reason-reason]`
-  - `$ban @Rafen spamming`
-- Soft ban : `$softban @[user_name] [reason-reason] [days]`
-  - `$softban @Rafen spamming 1`
-- Mute : `$mute @[user_name] [reason-reason] [seconds]s`
-  - `$mute @Rafen spamming 100s`
-- Reaction to set Role : reaction :watermelon: icon to add `Verified` role
-- Announcements: `$announce [text]`
-  - `$announce Hello everybody`
-- Music BOT with Youtube Link:
+- MODERATION BOT:
+
+  - Kick : `$kick @[user_name] [reason-reason]`
+    - `$kick @Rafen spamming`
+  - Ban : `$ban @[user_name] [reason-reason]`
+    - `$ban @Rafen spamming`
+  - Soft ban : `$softban @[user_name] [reason-reason]` - default: 1 day
+    - `$softban @Rafen spamming`
+  - Temp ban: `temp @[user_name] [reason-reason] [seconds]s`
+    - `$tempban @Rafen Breaking-rule 200s`
+  - Mute : `$mute @[user_name] [reason-reason] [seconds]s`
+    - `$mute @Rafen spamming 100s`
+  - UnMute: `$unmute @[user_name] [reason-reason]`
+    - `$unmute @Rafen ccc`
+  - Reaction to set Role:
+    - Reaction :watermelon: icon to add `Verified` role
+  - Announcements in bot-command channel, BOT send text to specify channel: `$announce [text]`
+    - `$announce Hello everybody`
+
+- Music BOT:
   - Play: `$play [youtube_url]`
     - `$play https://www.youtube.com/watch?v=gwpud7f_nDk`
   - Add music to queue: `$play [youtube_url]`
@@ -74,6 +82,8 @@
   - Ban with new command
 - Soft Ban command
 - Mute command
+- UnMute command
+- Temp Ban command
 
 ### After this project
 
@@ -81,6 +91,9 @@ Next Steps:
 
 - Music is playing but response too longgggg 😂
 - Add youtube search function
+- Add/Remove Role
+- Create/Delete Role
+- Create/Delete Channel
 
 ### Directory Structure
 
@@ -107,7 +120,7 @@ Next Steps:
 
   - `DISCORDJS_BOT_TOKEN`:
     - https://discord.com/developers/applications ~> BOT > TOKEN
-  - Setting Webhooks
+  - Setting Webhooks in specify channel that you want BOT send announcements
     - Setting text channel > Integrations > New Webhook > Copy Webhook URL
     - Get `WEBHOOK_ID` & `WEBHOOK_TOKEN` in URL
     - https://discordapp.com/api/webhooks/WEBHOOK_ID/WEBHOOK_TOKEN
