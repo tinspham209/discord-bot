@@ -91,7 +91,7 @@ __**MODERATION BOT:**__
 	- **Kick:**"$kick @[user_name] [reason]"
 	- **Ban: **"$ban @[user_name] [reason]"
 	- **Soft ban: **"$softban @[user_name] [reason]"
-	- **Temp ban: **"temp @[user_name] [reason] [seconds]"
+	- **Temp ban: **"tempban @[user_name] [reason] [seconds]"
 	- **Mute: ** "$mute @[user_name] [reason] [seconds]"
 	- **UnMute: **"$unmute @[user_name] [reason]"
 	- **Announcements: **"$announce [text]"
