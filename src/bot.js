@@ -213,7 +213,7 @@ client.on("message", async (message) => {
 				return message.reply("I don't have permissions to mute members");
 			}
 			if (!user) {
-				return message.channel.send("You need to specify someone to ban");
+				return message.channel.send("You need to specify someone to mute");
 			}
 			if (!mentionedMember) {
 				return message.channel.send("I can't find that member");
@@ -276,6 +276,55 @@ client.on("message", async (message) => {
 					`${mentionedMember} has now been unmuted after ${regex[0]}`
 				);
 			}, ms(regex[0]));
+			return undefined;
+		} else if (CMD_NAME === "unmute") {
+			const user = args[0];
+			const reason = args[1];
+			if (!message.member.hasPermission("KICK_MEMBERS")) {
+				return message.reply("You don't have permissions to use that command");
+			}
+			if (!message.guild.me.hasPermission("MANAGE_ROLES")) {
+				return message.reply("I don't have permissions to mute members");
+			}
+			if (!user) {
+				return message.channel.send("You need to specify member to unmute");
+			}
+			if (!mentionedMember) {
+				return message.channel.send("I can't find that member");
+			}
+			if (
+				mentionedMember.roles.highest.position >=
+					message.member.roles.highest.position ||
+				message.author.id !== message.guild.owner.id
+			) {
+				return message.channel.send(
+					"You can't mute that member who is equal or has a higher role to you or they are the owner"
+				);
+			}
+			if (mentionedMember.id === message.author.id) {
+				return message.channel.send("Nice try... you can't unmute yourself");
+			}
+			if (!mentionedMember.roles.cache.has(process.env.ROLE_MUTE_ID)) {
+				return message.channel.send("This member is not muted");
+			}
+			const embed = new MessageEmbed()
+				.setAuthor(
+					`${message.author.tag} - (${message.author.id})`,
+					message.author.displayAvatarURL()
+				)
+				.setThumbnail(mentionedMember.user.displayAvatarURL())
+				.setColor("#ebb734")
+				.setDescription(
+					`
+**Member:** ${mentionedMember.user.tag} - (${mentionedMember.user.id})
+**Action:** UnMute
+**Reason:** ${reason || "Undefined"}
+**Channel:** ${message.channel}
+**Time:** ${moment().format("llll")}
+					`
+				);
+			message.channel.send(embed);
+			mentionedMember.roles.remove(process.env.ROLE_MUTE_ID);
 			return undefined;
 		} else if (CMD_NAME === "announce") {
 			const msg = args.join(" ");
