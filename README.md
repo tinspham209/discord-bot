@@ -4,9 +4,9 @@
 
 ### Tech-Stack
 
-- NodeJS
+- NodeJS v14.7
 - Discord.js v12
-- dotenv
+- dotenv : store variable `process.env.variable_name`
 - ytdl-core : Convert youtube link to audio
 - opusscript
 - ffmpeg-static : Need FFMPEG For Any Music Bot To Work
@@ -15,40 +15,40 @@
 
 ### Screenshot
 
-<img src="https://i.imgur.com/snzfdBE.png" />
+<img src="https://i.imgur.com/vSPWEkd.png" />
 
 ### Functions
 
 - MODERATION BOT:
 
   - Kick : `$kick @[user_name] [reason-reason]`
-    - `$kick @Rafen spamming`
+    - \$kick @Rafen spamming
   - Ban : `$ban @[user_name] [reason-reason]`
-    - `$ban @Rafen spamming`
+    - \$ban @Rafen spamming
   - Soft ban : `$softban @[user_name] [reason-reason]` - default: 1 day
-    - `$softban @Rafen spamming`
+    - \$softban @Rafen spamming
   - Temp ban: `temp @[user_name] [reason-reason] [seconds]s`
-    - `$tempban @Rafen Breaking-rule 200s`
+    - \$tempban @Rafen Breaking-rule 200s
   - Mute : `$mute @[user_name] [reason-reason] [seconds]s`
-    - `$mute @Rafen spamming 100s`
+    - \$mute @Rafen spamming 100s
   - UnMute: `$unmute @[user_name] [reason-reason]`
-    - `$unmute @Rafen ccc`
+    - \$unmute @Rafen ccc
   - Reaction to set Role:
     - Reaction :watermelon: icon to add `Verified` role
   - Announcements in bot-command channel, BOT send text to specify channel: `$announce [text]`
-    - `$announce Hello everybody`
+    - \$announce Hello everybody
 
-- Music BOT:
+- MUSIC BOT:
   - Play: `$play [youtube_url]`
-    - `$play https://www.youtube.com/watch?v=gwpud7f_nDk`
+    - \$play https://www.youtube.com/watch?v=gwpud7f_nDk
   - Add music to queue: `$play [youtube_url]`
-    - `$play https://www.youtube.com/watch?v=gwpud7f_nDk`
+    - \$play https://www.youtube.com/watch?v=gwpud7f_nDk
   - Stop: `$stop`
   - Skip: `$skip`
   - Pause: `$pause`
   - Resume: `$resume`
   - change Volume : `$volume [1-5]` - default: 5
-    - `\$volume 3`
+    - \$volume 3
   - Now Playing: `$nowplaying`
   - check song queue: `$queue`
 
