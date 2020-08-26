@@ -35,7 +35,7 @@
     - \$unmute @Rafen ccc
   - Reaction to set Role:
     - Reaction :watermelon: icon to add `Verified` role
-  - Announcements in bot-command channel, BOT send text to specify channel: `$announce [text]`
+  - Send text in bot-command channel, BOT send announcements to specify channel: `$announce [text]`
     - \$announce Hello everybody
 
 - MUSIC BOT:
