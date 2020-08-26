@@ -18,6 +18,7 @@ const queue = new Map();
 
 client.on("ready", () => {
 	console.log(`${client.user.tag} has logged in.`);
+	client.user.setActivity("⚠️ $help ⚠️ ");
 });
 
 client.on("message", async (message) => {
@@ -84,6 +85,29 @@ client.on("message", async (message) => {
 				);
 			}
 			return undefined;
+		} else if (CMD_NAME === "help") {
+			const embed = new MessageEmbed().setColor("#ebb734").setDescription(`
+__**MODERATION BOT:**__
+	- **Kick:**"$kick @[user_name] [reason]"
+	- **Ban: **"$ban @[user_name] [reason]"
+	- **Soft ban: **"$softban @[user_name] [reason]"
+	- **Temp ban: **"temp @[user_name] [reason] [seconds]"
+	- **Mute: ** "$mute @[user_name] [reason] [seconds]"
+	- **UnMute: **"$unmute @[user_name] [reason]"
+	- **Announcements: **"$announce [text]"
+
+__**MUSIC BOT:**__
+	- **Play: **"$play [youtube_url]"
+	- **Add music to queue: **"$play [youtube_url]"
+	- **Stop: **"$stop"
+	- **Skip: **"$skip"
+	- **Pause: **"$pause"
+	- **Resume: **"$resume"
+	- **change Volume: **"$volume [1-5]" - default: 5
+	- **Now Playing: **"$nowplaying"
+	- **check song queue: **"$queue"
+			`);
+			return message.channel.send(embed);
 		} else if (CMD_NAME === "ban") {
 			const reason = args[1];
 			const user = args[0];
