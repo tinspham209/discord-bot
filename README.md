@@ -27,7 +27,7 @@
     - \$ban @Rafen spamming
   - Soft ban : `$softban @[user_name] [reason-reason]` - default: 1 day
     - \$softban @Rafen spamming
-  - Temp ban: `temp @[user_name] [reason-reason] [seconds]s`
+  - Temp ban: `tempban @[user_name] [reason-reason] [seconds]s`
     - \$tempban @Rafen Breaking-rule 200s
   - Mute : `$mute @[user_name] [reason-reason] [seconds]s`
     - \$mute @Rafen spamming 100s
