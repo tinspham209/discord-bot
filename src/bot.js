@@ -201,6 +201,79 @@ client.on("message", async (message) => {
 				);
 			}
 			return undefined;
+		} else if (CMD_NAME === "tempban") {
+			const user = args[0];
+			const reason = args[1];
+			const times = args[2];
+			const regex = /\d+[smhdw]/.exec(times);
+			if (!message.member.hasPermission("BAN_MEMBERS")) {
+				return message.reply("You don't have permissions to use that command");
+			}
+			if (!message.guild.me.hasPermission("BAN_MEMBERS")) {
+				return message.reply("I don't have permissions to ban members");
+			}
+			if (!user) {
+				return message.channel.send("You need to specify someone to tempBan");
+			}
+			if (!mentionedMember) {
+				return message.channel.send("I can't find that member");
+			}
+			if (!times) {
+				return message.channel.send(
+					"You need to specify how long you want to ban this user for"
+				);
+			}
+			if (!regex) {
+				return message.channel.send(
+					"That is not a valid amount of time to ban"
+				);
+			}
+			if (ms(regex[0]) > 214748367) {
+				return message.channel.send(
+					"Make sure you don't tempBan a member for more than 25days"
+				);
+			}
+			if (
+				mentionedMember.roles.highest.position >=
+					message.member.roles.highest.position ||
+				message.author.id !== message.guild.owner.id
+			) {
+				return message.channel.send(
+					"You can't tempBan that member who is equal or has a higher role to you or they are the owner"
+				);
+			}
+			if (mentionedMember.id === message.author.id) {
+				return message.channel.send("Why would you want to tempBan yourself?");
+			}
+			const embed = new MessageEmbed()
+				.setAuthor(
+					`${message.author.tag} - (${message.author.id})`,
+					message.author.displayAvatarURL()
+				)
+				.setThumbnail(mentionedMember.user.displayAvatarURL())
+				.setColor("#ebb734")
+				.setDescription(
+					`
+**Member:** ${mentionedMember.user.tag} - (${mentionedMember.user.id})
+**Action:** TempBan
+**Length:** ${regex}
+**Reason:** ${reason || "Undefined"}
+**Channel:** ${message.channel}
+**Time:** ${moment().format("llll")}
+					`
+				);
+			message.channel.send(embed);
+			mentionedMember.ban();
+			setTimeout(() => {
+				if (!message.guild.me.hasPermission("BAN_MEMBERS")) {
+					return message.reply("I don't have permissions to unban members");
+				}
+				message.guild.members.unban(mentionedMember.id);
+				message.channel.send(
+					`${mentionedMember} has been unbanned after ${times}`
+				);
+			}, ms(regex[0]));
+			return undefined;
 		} else if (CMD_NAME === "mute") {
 			const user = args[0];
 			const reason = args[1];
