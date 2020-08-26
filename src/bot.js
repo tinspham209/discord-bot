@@ -137,13 +137,8 @@ client.on("message", async (message) => {
 			}
 			return undefined;
 		} else if (CMD_NAME === "softban") {
-			console.log("softban");
-			const days = args[2];
 			const reason = args[1];
 			const user = args[0];
-			console.log("days", days);
-			console.log("reason", reason);
-			console.log("user", user);
 			if (!message.member.hasPermission("BAN_MEMBERS")) {
 				return message.reply("You don't have permissions to use that command");
 			}
@@ -168,11 +163,6 @@ client.on("message", async (message) => {
 			if (mentionedMember.id === message.author.id) {
 				return message.channel.send("Why would you want to softBan yourself?");
 			}
-			if (isNaN(days)) {
-				return message.channel.send(
-					"Days ban is invalid, sure sure it is a number?"
-				);
-			}
 			if (mentionedMember.bannable) {
 				const embed = new MessageEmbed()
 					.setAuthor(
@@ -185,7 +175,7 @@ client.on("message", async (message) => {
 						`
 **Member:** ${mentionedMember.user.tag} - (${mentionedMember.user.id})
 **Action:** Soft Ban
-**Ban Times:** ${days} days
+**Length:** 1day
 **Reason:** ${reason || "Undefined"}
 **Channel:** ${message.channel}
 **Time:** ${moment().format("llll")}
@@ -193,7 +183,7 @@ client.on("message", async (message) => {
 					);
 				message.channel.send(embed);
 				mentionedMember
-					.ban({ days: days })
+					.ban({ days: 1 })
 					.then(() => message.guild.members.unban(mentionedMember.id));
 			} else {
 				return message.channel.send(
