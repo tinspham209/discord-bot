@@ -78,8 +78,8 @@
 - NowPlaying command
 - check song queue command
 - Refactor
-  - Kick with new command
-  - Ban with new command
+  - Kick with new logic
+  - Ban with new logic
 - Soft Ban command
 - Mute command
 - UnMute command
